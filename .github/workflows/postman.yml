@@ -1,0 +1,16 @@
+name: postman
+
+on: deployment_status
+
+jobs:
+  postman:
+    if: github.event.deployment_status.state == 'success' && github.event.deployment.ref != 'gh-pages'
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Run API Tests
+      uses: anthonyvscode/newman-action@v1
+      with:
+        apiKey: ${{ secrets.postmanApiKey }}
+        collection: 229781-a2c07451-01c5-4c62-a7fa-9be8c15eb284
+        reporters: cli
