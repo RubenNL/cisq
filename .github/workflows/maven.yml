@@ -37,8 +37,6 @@ jobs:
         postgresql user: cisq1-lingo
         postgresql password: cisq1-lingo
         postgresql db: lingo
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
     - name: Build and analyze
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
