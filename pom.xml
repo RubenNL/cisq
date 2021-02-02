@@ -17,7 +17,10 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>13</java.version>
-        <jdbc.url>jdbc:postgresql://127.0.0.1:5432/lingo</jdbc.url><!-- hier geplaatst om profiles makkelijker te maken -->
+        <jdbc.url>jdbc:postgresql://127.0.0.1:5432/lingo</jdbc.url>
+        <sonar.projectKey>RubenNL_cisq</sonar.projectKey>
+        <sonar.organization>rubennl</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <dependencies>
@@ -61,14 +64,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <profiles>
-        <profile>
-            <id>ruben</id>
-            <properties>
-                <jdbc.url>jdbc:postgresql://192.168.99.1:5432/lingo</jdbc.url>
-            </properties>
-        </profile>
-	</profiles>
     <build>
         <plugins>
             <plugin>
