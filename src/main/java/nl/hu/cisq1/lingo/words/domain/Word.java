@@ -3,7 +3,6 @@ package nl.hu.cisq1.lingo.words.domain;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -11,8 +10,7 @@ import javax.persistence.Id;
 @Data
 @NoArgsConstructor
 public class Word {
-    @Id
-    private String value;
+    @Id private String value;
     private Integer length;
 
     public Word(String word) {
