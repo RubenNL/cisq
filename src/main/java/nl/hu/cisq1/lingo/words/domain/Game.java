@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.List;
 
@@ -14,6 +13,5 @@ import java.util.List;
 @NoArgsConstructor
 public class Game {
 	@Id private Integer id;
-	@ManyToOne private Player player;
 	@OneToMany(mappedBy="game") private List<Round> roundList;
 }
