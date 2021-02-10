@@ -13,8 +13,8 @@ import javax.persistence.ManyToOne;
 public class Guess {
 	@Id private Integer id;
 	@ManyToOne private Round round;
-	private String guess;
-	public Guess(String guess) {
-		this.guess=guess;
+	private String word;
+	public Guess(String word) {
+		this.word=word;
 	}
 }
