@@ -13,8 +13,8 @@ public class WordTestDataFixtures implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        this.repository.save(new Word("pizza"));
-        this.repository.save(new Word("oranje"));
-        this.repository.save(new Word("wanorde"));
+    //    this.repository.save(new Word("pizza"));
+    //    this.repository.save(new Word("oranje"));
+    //    this.repository.save(new Word("wanorde"));
     }
 }

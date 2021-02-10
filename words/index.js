@@ -10,6 +10,6 @@ const words = readFileSync(`${__dirname}/woorden-opentaal.txt`, "utf-8")
     .map(word => `('${word}', ${word.length})`);
 
 const sql="-- Extracted from: https://github.com/OpenTaal/opentaal-wordlist/\n"
-    + `INSERT INTO words (word, length) VALUES \n\t${words.slice(0, 6000).join(",\n\t")};`;
+    + `INSERT INTO word (value, length) VALUES \n\t${words.slice(0, 6000).join(",\n\t")};`;
 
 writeFileSync(`${__dirname}/../../src/main/resources/data.sql`, sql);

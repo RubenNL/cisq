@@ -1,5 +1,5 @@
 -- Extracted from: https://github.com/OpenTaal/opentaal-wordlist/
-INSERT INTO words (word, length) VALUES 
+INSERT INTO word (value, length) VALUES
 	('bereid', 6),
 	('nekhaar', 7),
 	('gejaag', 6),

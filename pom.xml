@@ -21,6 +21,7 @@
         <sonar.projectKey>RubenNL_cisq</sonar.projectKey>
         <sonar.organization>rubennl</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <cisq.runningmvn>mvnUrl</cisq.runningmvn>
     </properties>
 
     <dependencies>
@@ -62,6 +63,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.16</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
     <build>
