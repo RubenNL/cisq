@@ -23,6 +23,7 @@
         <sonar.organization>rubennl</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <cisq.runningmvn>mvnUrl</cisq.runningmvn>
+        <cisq.heroku>package</cisq.heroku>
     </properties>
 
     <dependencies>
@@ -92,7 +93,7 @@
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <phase>${cisq.heroku}</phase>
                         <goals><goal>copy</goal></goals>
                         <configuration>
                             <artifactItems>
