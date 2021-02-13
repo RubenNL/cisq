@@ -24,6 +24,7 @@
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <cisq.runningmvn>mvnUrl</cisq.runningmvn>
         <cisq.heroku>package</cisq.heroku>
+        <cisq.owasp>package</cisq.owasp>
     </properties>
 
     <dependencies>
@@ -81,6 +82,7 @@
                 <version>6.1.1</version>
                 <executions>
                     <execution>
+                        <phase>${cisq.owasp}</phase>
                         <goals>
                             <goal>check</goal>
                         </goals>
