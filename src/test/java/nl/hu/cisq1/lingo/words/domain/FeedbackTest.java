@@ -1,5 +1,6 @@
 package nl.hu.cisq1.lingo.words.domain;
 
+import nl.hu.cisq1.lingo.words.domain.exception.InvalidFeedbackException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -31,5 +32,10 @@ class FeedbackTest {
 	void guessIsInvalid() {
 		Feedback feedback=new Feedback("woord", List.of(Mark.INVALID,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT));
 		assertFalse(feedback.isWordValid());
+	}
+	@Test
+	@DisplayName("invalid mark size test")
+	void markSizeIncorrect() {
+		assertThrows(InvalidFeedbackException.class,() -> new Feedback("woord", List.of(Mark.CORRECT)));
 	}
 }
