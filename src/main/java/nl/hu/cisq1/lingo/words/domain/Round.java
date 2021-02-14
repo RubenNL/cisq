@@ -13,5 +13,5 @@ public class Round {
 	@Id private Integer id;
 	@OneToOne private Word word;
 	@ManyToOne private Game game;
-	@OneToMany(mappedBy="round") private List<Feedback> FeedbackList;
+	@OneToMany(mappedBy="round") private List<Feedback> feedbackList;
 }

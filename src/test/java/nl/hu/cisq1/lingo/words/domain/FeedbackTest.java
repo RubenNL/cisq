@@ -43,7 +43,8 @@ class FeedbackTest {
 	@Test
 	@DisplayName("invalid mark size test")
 	void markSizeIncorrect() {
-		assertThrows(InvalidFeedbackException.class,() -> new Feedback("woord", List.of(Mark.CORRECT)));
+		List<Mark> smallList=List.of(Mark.CORRECT);
+		assertThrows(InvalidFeedbackException.class,() -> new Feedback("woord", smallList));
 	}
 	private static Stream<Arguments> provideHintTests() {
 		return Stream.of(
