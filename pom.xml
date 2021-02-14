@@ -25,6 +25,7 @@
 		<cisq.runningmvn>mvnUrl</cisq.runningmvn>
 		<cisq.heroku>package</cisq.heroku>
 		<cisq.owasp>package</cisq.owasp>
+		<sonar.exclusions>**/LingoApplication.java</sonar.exclusions>
 	</properties>
 
 	<dependencies>
