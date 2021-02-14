@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -22,7 +23,7 @@ class FeedbackTest {
 	@ParameterizedTest
 	@DisplayName("word is guessed multi-test")
 	@MethodSource("provideGuessedTests")
-	void giveHintTest(String attempt, List marks,Boolean expected) {
+	void giveHintTest(String attempt, List<Mark> marks,Boolean expected) {
 		Feedback feedback=new Feedback(attempt,marks);
 		assertEquals(expected,feedback.isWordGuessed());
 	}
@@ -35,7 +36,7 @@ class FeedbackTest {
 	@ParameterizedTest
 	@DisplayName("word is valid multi-test")
 	@MethodSource("provideValidTests")
-	void validTests(String attempt, List marks,Boolean expected) {
+	void validTests(String attempt, List<Mark> marks,Boolean expected) {
 		Feedback feedback=new Feedback(attempt,marks);
 		assertEquals(expected,feedback.isWordValid());
 	}
@@ -44,4 +45,21 @@ class FeedbackTest {
 	void markSizeIncorrect() {
 		assertThrows(InvalidFeedbackException.class,() -> new Feedback("woord", List.of(Mark.CORRECT)));
 	}
+	private static Stream<Arguments> provideHintTests() {
+		return Stream.of(
+				Arguments.of("woord", List.of(Mark.CORRECT,Mark.ABSENT,Mark.CORRECT,Mark.ABSENT,Mark.ABSENT), "w...d","w.o.d"),
+				Arguments.of("woord", List.of(Mark.CORRECT,Mark.PRESENT,Mark.PRESENT,Mark.CORRECT,Mark.ABSENT), "w...d","w..rd"),
+				Arguments.of("woord", List.of(Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT), "w...d","woord")
+		);
+	}
+	@ParameterizedTest
+	@DisplayName("hint multi-test")
+	@MethodSource("provideHintTests")
+	void hintTests(String wordToGuess, List<Mark> marks, String oldHintString,String expectedString) {
+		Feedback feedback=new Feedback("woord",marks);
+		List<String> oldHint=Arrays.asList(oldHintString.split("")); //Tests written with strings, to make it readable.
+		List<String> expected=Arrays.asList(expectedString.split(""));
+		assertEquals(expected,feedback.giveHint(oldHint,wordToGuess));
+	}
+
 }
