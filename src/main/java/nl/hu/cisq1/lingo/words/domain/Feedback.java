@@ -23,6 +23,30 @@ public class Feedback {
 		this.marks=marks;
 		if(this.attempt.length()!=this.marks.size()) throw new InvalidFeedbackException(this.marks.size(),this.attempt.length());
 	}
+	public Feedback(String attempt, String word) {
+		this(attempt,generateMarks(attempt,word));
+	}
+	public static List<Mark> generateMarks(String guess, String word) {
+		List<Mark> marks=new ArrayList<>();
+		if(guess.length()!=word.length()) return List.of(Mark.INVALID);
+		char[] wordArray=word.toCharArray();
+		char[] guessArray=guess.toCharArray();
+		List<Character> wordListInvalid=new ArrayList<>();
+		for(int i=0;i<wordArray.length;i++) {
+			if(wordArray[i]==guessArray[i]) marks.add(Mark.CORRECT);
+			else {
+				marks.add(Mark.ABSENT);
+				wordListInvalid.add(wordArray[i]);
+			}
+		}
+		for(int i=0;i<wordArray.length;i++) {
+			if(wordListInvalid.contains(guessArray[i]) && marks.get(i)==Mark.ABSENT) {
+				wordListInvalid.remove(wordListInvalid.indexOf(guessArray[i])); //Don't use IntelliJ fix on remove, breaks it.
+				marks.set(i,Mark.PRESENT);
+			}
+		}
+		return marks;
+	}
 	public boolean isWordGuessed() {
 		return marks.stream().allMatch(mark->mark==Mark.CORRECT);
 	}
