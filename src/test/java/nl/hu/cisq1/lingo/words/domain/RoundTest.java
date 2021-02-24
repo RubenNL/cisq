@@ -24,11 +24,9 @@ class RoundTest {
 	@DisplayName("addFeedback max test")
 	void addFeedbackMaxTest() {
 		Round round=new Round(new Word("abcdef"));
-		assertDoesNotThrow(()->round.addFeedback("testab"),"first does not throw");
-		assertDoesNotThrow(()->round.addFeedback("testac"),"second does not throw");
-		assertDoesNotThrow(()->round.addFeedback("testad"),"third does not throw");
-		assertDoesNotThrow(()->round.addFeedback("testae"),"fourth does not throw");
-		assertDoesNotThrow(()->round.addFeedback("testaf"),"fifth does not throw");
+		for(int i=0;i<Round.MAXROUNDS;i++) {
+			assertDoesNotThrow(() -> round.addFeedback("testab"), "first to max does not throw");
+		}
 		assertThrows(IllegalActionException.class,()->round.addFeedback("testag"),"sixth does throw");
 		assertThrows(IllegalActionException.class,()->round.addFeedback("testah"),"seventh does also throw");
 		assertEquals(5,round.getFeedbackList().size(),"only 5 feedbacks are added");

@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 public class Round {
-	public final static Integer maxRounds=5;
+	public static final Integer MAXROUNDS=5;
 	@Id private Integer id;
 	@OneToOne private Word word;
 	@ManyToOne private Game game;
@@ -21,7 +21,7 @@ public class Round {
 		this.word=word;
 	}
 	public Feedback addFeedback(String attempt) {
-		if(feedbackList.size()==5) throw new IllegalActionException("al 5 keer geraden!");
+		if(feedbackList.size()==MAXROUNDS) throw new IllegalActionException("al 5 keer geraden!");
 		Feedback feedback=new Feedback(attempt,word.getValue());
 		feedbackList.add(feedback);
 		return feedback;
