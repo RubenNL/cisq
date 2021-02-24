@@ -62,5 +62,23 @@ class FeedbackTest {
 		List<String> expected=Arrays.asList(expectedString.split(""));
 		assertEquals(expected,feedback.giveHint(oldHint,wordToGuess));
 	}
-
+	private static Stream<Arguments> provideMarksTest() {
+		return Stream.of(
+				Arguments.of("woord", "aaaaa",List.of(Mark.ABSENT,Mark.ABSENT,Mark.ABSENT,Mark.ABSENT,Mark.ABSENT),"Complete different word"),
+				Arguments.of("woord", "a",List.of(Mark.INVALID),"invalid length"),
+				Arguments.of("woord","waare",List.of(Mark.CORRECT,Mark.ABSENT,Mark.ABSENT,Mark.CORRECT,Mark.ABSENT),"1 char correct"),
+				Arguments.of("woord","waboo",List.of(Mark.CORRECT,Mark.ABSENT,Mark.ABSENT,Mark.PRESENT,Mark.PRESENT),"2 chars misplaced"),
+				Arguments.of("woord","waood",List.of(Mark.CORRECT,Mark.ABSENT,Mark.CORRECT,Mark.PRESENT,Mark.CORRECT),"1/2 chars misplaced"),
+				Arguments.of("woord","woood",List.of(Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.ABSENT,Mark.CORRECT),"too much of correct char"),
+				Arguments.of("ababa","babab",List.of(Mark.PRESENT,Mark.PRESENT,Mark.PRESENT,Mark.PRESENT,Mark.ABSENT),"repeating pattern"),
+				Arguments.of("aabb","bbaa",List.of(Mark.PRESENT,Mark.PRESENT,Mark.PRESENT,Mark.PRESENT),"reversed")
+		);
+	}
+	@ParameterizedTest
+	@DisplayName("generate marks multi-test")
+	@MethodSource("provideMarksTest")
+	void marksTest(String word, String guess,List<Mark> expected,String message) {
+		Feedback feedback=new Feedback(guess,word);
+		assertEquals(expected,feedback.getMarks(),message);
+	}
 }
