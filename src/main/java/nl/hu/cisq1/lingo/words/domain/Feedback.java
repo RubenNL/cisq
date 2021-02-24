@@ -41,7 +41,8 @@ public class Feedback {
 		}
 		for(int i=0;i<wordArray.length;i++) {
 			if(wordListInvalid.contains(guessArray[i]) && marks.get(i)==Mark.ABSENT) {
-				wordListInvalid.remove(wordListInvalid.indexOf(guessArray[i])); //Don't use IntelliJ fix on remove, breaks it.
+				//noinspection RedundantCollectionOperation
+				wordListInvalid.remove(wordListInvalid.indexOf(guessArray[i]));
 				marks.set(i,Mark.PRESENT);
 			}
 		}
