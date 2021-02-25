@@ -28,7 +28,7 @@ public class Round {
 		return feedback;
 	}
 	public boolean wordGuessed() {
-		if(feedbackList.size()==0) return false;
+		if(feedbackList.isEmpty()) return false;
 		return feedbackList.get(feedbackList.size()-1).isWordGuessed();
 	}
 	public int getScore() {
