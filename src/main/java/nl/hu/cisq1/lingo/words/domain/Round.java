@@ -22,8 +22,17 @@ public class Round {
 	}
 	public Feedback addFeedback(String attempt) {
 		if(feedbackList.size()==MAXROUNDS) throw new IllegalActionException("al 5 keer geraden!");
+		if(wordGuessed()) throw new IllegalActionException("word al geraden!");
 		Feedback feedback=new Feedback(attempt,word.getValue());
 		feedbackList.add(feedback);
 		return feedback;
+	}
+	public boolean wordGuessed() {
+		if(feedbackList.size()==0) return false;
+		return feedbackList.get(feedbackList.size()-1).isWordGuessed();
+	}
+	public int getScore() {
+		if(!wordGuessed()) return 0;
+		return (MAXROUNDS*(MAXROUNDS-feedbackList.size())+MAXROUNDS);
 	}
 }
