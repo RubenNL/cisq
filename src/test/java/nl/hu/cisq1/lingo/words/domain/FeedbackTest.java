@@ -78,7 +78,6 @@ class FeedbackTest {
 	@DisplayName("generate marks multi-test")
 	@MethodSource("provideMarksTest")
 	void marksTest(String word, String guess,List<Mark> expected,String message) {
-		Feedback feedback=new Feedback(guess,word);
-		assertEquals(expected,feedback.getMarks(),message);
+		assertEquals(expected,Feedback.generateMarks(guess,word),message);
 	}
 }

@@ -23,7 +23,7 @@ public class Round {
 	public Feedback addFeedback(String attempt) {
 		if(feedbackList.size()==MAXROUNDS) throw new IllegalActionException("al 5 keer geraden!");
 		if(wordGuessed()) throw new IllegalActionException("word al geraden!");
-		Feedback feedback=new Feedback(attempt,word.getValue());
+		Feedback feedback=new Feedback(attempt,Feedback.generateMarks(attempt,word.getValue()));
 		feedbackList.add(feedback);
 		return feedback;
 	}

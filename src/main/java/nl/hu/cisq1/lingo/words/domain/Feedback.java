@@ -23,9 +23,6 @@ public class Feedback {
 		this.marks=marks;
 		if(this.attempt.length()!=this.marks.size()) throw new InvalidFeedbackException(this.marks.size(),this.attempt.length());
 	}
-	public Feedback(String attempt, String word) {
-		this(attempt,generateMarks(attempt,word));
-	}
 	@SuppressWarnings("java:S5413") //wordListInvalid.remove gave a warning that is not applicable in this situation.
 	public static List<Mark> generateMarks(String guess, String word) {
 		List<Mark> marks=new ArrayList<>();
