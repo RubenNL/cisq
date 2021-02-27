@@ -107,4 +107,40 @@ class RoundTest {
 		round.addFeedback("abcdef");
 		assertEquals(5,round.getScore());
 	}
+	@Test
+	@DisplayName("empty feedback test")
+	void emptyFeedbackTest() {
+		Round round=new Round(new Word("abcdef"));
+		assertEquals(List.of("a",".",".",".",".","."),round.giveHint());
+	}
+	@Test
+	@DisplayName("single feedback geen correct test")
+	void singleFeedbackNoCorrectTest() {
+		Round round=new Round(new Word("abcdef"));
+		round.addFeedback("azzzzz");
+		assertEquals(List.of("a",".",".",".",".","."),round.giveHint());
+	}
+	@Test
+	@DisplayName("single feedback invalid")
+	void singleFeedbackInvalidTest() {
+		Round round=new Round(new Word("abcdef"));
+		round.addFeedback("a");
+		assertEquals(List.of("a",".",".",".",".","."),round.giveHint());
+	}
+	@Test
+	@DisplayName("correctFeedback test")
+	void feedbackCorrectTest() {
+		Round round=new Round(new Word("abcdef"));
+		round.addFeedback("afcdbe");
+		assertEquals(List.of("a",".","c","d",".","."),round.giveHint());
+	}
+	@Test
+	@DisplayName("1xinvalid 1xvalid test")
+	void feedbackvalidinvalid() {
+		Round round=new Round(new Word("abcdef"));
+		round.addFeedback("a");
+		round.addFeedback("acbedf");
+		assertEquals(List.of("a",".",".",".",".","f"),round.giveHint());
+	}
+
 }

@@ -6,6 +6,7 @@ import nl.hu.cisq1.lingo.words.domain.exception.IllegalActionException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -21,8 +22,7 @@ public class Round {
 		this.word=word;
 	}
 	public Feedback addFeedback(String attempt) {
-		if(feedbackList.size()==MAXROUNDS) throw new IllegalActionException("al 5 keer geraden!");
-		if(wordGuessed()) throw new IllegalActionException("word al geraden!");
+		if(getState()!=State.ACTIVE) throw new IllegalActionException("ronde is gewonnen/verloren!");
 		Feedback feedback=new Feedback(attempt,Feedback.generateMarks(attempt,word.getValue()));
 		feedbackList.add(feedback);
 		return feedback;
@@ -34,5 +34,18 @@ public class Round {
 	public int getScore() {
 		if(!wordGuessed()) return 0;
 		return (MAXROUNDS*(MAXROUNDS-feedbackList.size())+MAXROUNDS);
+	}
+	public State getState() {
+		if(wordGuessed()) return State.WON;
+		if(feedbackList.size()==MAXROUNDS) return State.LOST;
+		return State.ACTIVE;
+	}
+	public List<String> giveHint() {//Rare structuur om de Feedback.giveHint op deze manier te laten werken...
+		List<String> lastHint= new ArrayList<>(List.of(word.getValue().split("")[0]));
+		lastHint.addAll(Collections.nCopies(word.getLength()-1, "."));
+		for(Feedback feedback:feedbackList) {
+			lastHint=feedback.giveHint(lastHint,word.getValue());
+		}
+		return lastHint;
 	}
 }

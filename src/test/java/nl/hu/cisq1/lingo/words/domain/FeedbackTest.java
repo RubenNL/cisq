@@ -1,8 +1,6 @@
 package nl.hu.cisq1.lingo.words.domain;
 
-import nl.hu.cisq1.lingo.words.domain.exception.InvalidFeedbackException;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -40,12 +38,6 @@ class FeedbackTest {
 		Feedback feedback=new Feedback(attempt,marks);
 		assertEquals(expected,feedback.isWordValid());
 	}
-	@Test
-	@DisplayName("invalid mark size test")
-	void markSizeIncorrect() {
-		List<Mark> smallList=List.of(Mark.CORRECT);
-		assertThrows(InvalidFeedbackException.class,() -> new Feedback("woord", smallList));
-	}
 	private static Stream<Arguments> provideHintTests() {
 		return Stream.of(
 				Arguments.of("woord", List.of(Mark.CORRECT,Mark.ABSENT,Mark.CORRECT,Mark.ABSENT,Mark.ABSENT), "w...d","w.o.d"),
@@ -65,7 +57,7 @@ class FeedbackTest {
 	private static Stream<Arguments> provideMarksTest() {
 		return Stream.of(
 				Arguments.of("woord", "aaaaa",List.of(Mark.ABSENT,Mark.ABSENT,Mark.ABSENT,Mark.ABSENT,Mark.ABSENT),"Complete different word"),
-				Arguments.of("woord", "a",List.of(Mark.INVALID),"invalid length"),
+				Arguments.of("woord", "a",List.of(Mark.INVALID,Mark.INVALID,Mark.INVALID,Mark.INVALID,Mark.INVALID),"invalid length"),
 				Arguments.of("woord","waare",List.of(Mark.CORRECT,Mark.ABSENT,Mark.ABSENT,Mark.CORRECT,Mark.ABSENT),"1 char correct"),
 				Arguments.of("woord","waboo",List.of(Mark.CORRECT,Mark.ABSENT,Mark.ABSENT,Mark.PRESENT,Mark.PRESENT),"2 chars misplaced"),
 				Arguments.of("woord","waood",List.of(Mark.CORRECT,Mark.ABSENT,Mark.CORRECT,Mark.PRESENT,Mark.CORRECT),"1/2 chars misplaced"),
