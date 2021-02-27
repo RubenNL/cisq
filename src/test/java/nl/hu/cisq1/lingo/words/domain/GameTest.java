@@ -18,7 +18,8 @@ class GameTest {
 	void startNewRoundStartedRound() {
 		Game game=new Game();
 		game.startNewRound(new Word("test"));
-		assertThrows(IllegalActionException.class,()->game.startNewRound(new Word("test")));
+		Word word=new Word("test");
+		assertThrows(IllegalActionException.class, () -> game.startNewRound(word));
 	}
 	@Test
 	@DisplayName("startNewRound win before test")
@@ -40,7 +41,8 @@ class GameTest {
 		round.addFeedback("abcd");
 		round.addFeedback("abcd");
 		round.addFeedback("abcd");
-		assertThrows(IllegalActionException.class, () -> game.startNewRound(new Word("test")));
+		Word word=new Word("test");
+		assertThrows(IllegalActionException.class, () -> game.startNewRound(word));
 	}
 	@Test
 	@DisplayName("emptyScore test")

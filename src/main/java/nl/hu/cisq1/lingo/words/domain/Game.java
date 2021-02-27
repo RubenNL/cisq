@@ -28,7 +28,7 @@ public class Game {
 		return rounds.stream().mapToInt(Round::getScore).sum();
 	}
 	public Round getLastRound() {
-		if(this.rounds.size()==0) return null;
+		if(this.rounds.isEmpty()) return null;
 		return this.rounds.get(this.rounds.size() - 1);
 	}
 }
