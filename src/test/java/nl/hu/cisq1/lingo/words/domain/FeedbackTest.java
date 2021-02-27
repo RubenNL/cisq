@@ -1,7 +1,6 @@
 package nl.hu.cisq1.lingo.words.domain;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -13,9 +12,6 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FeedbackTest {
-	@Test
-	@DisplayName("need a @Test to trigger parameterizedTests...")
-	void triggerparameterizedTests() {}
 	private static Stream<Arguments> provideGuessedTests() {
 		return Stream.of(
 				Arguments.of("woord", List.of(Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT),true),
@@ -42,13 +38,6 @@ class FeedbackTest {
 		Feedback feedback=new Feedback(attempt,marks);
 		assertEquals(expected,feedback.isWordValid());
 	}
-	//Disabled test because invalid feedback shouldn't prevent a feedback object from existing.
-	/*@Test
-	@DisplayName("invalid mark size test")
-	void markSizeIncorrect() {
-		List<Mark> smallList=List.of(Mark.CORRECT);
-		assertThrows(InvalidFeedbackException.class,() -> new Feedback("woord", smallList));
-	}*/
 	private static Stream<Arguments> provideHintTests() {
 		return Stream.of(
 				Arguments.of("woord", List.of(Mark.CORRECT,Mark.ABSENT,Mark.CORRECT,Mark.ABSENT,Mark.ABSENT), "w...d","w.o.d"),

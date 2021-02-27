@@ -21,8 +21,6 @@ public class Feedback {
 	public Feedback(String attempt,List<Mark> marks) {
 		this.attempt=attempt;
 		this.marks=marks;
-		//Disabled because invalid feedback shouldn't prevent a feedback object from existing.
-		//if(this.attempt.length()!=this.marks.size()) throw new InvalidFeedbackException(this.marks.size(),this.attempt.length());
 	}
 	@SuppressWarnings("java:S5413") //wordListInvalid.remove gave a warning that is not applicable in this situation.
 	public static List<Mark> generateMarks(String guess, String word) {
