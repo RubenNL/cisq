@@ -2,10 +2,10 @@ package nl.hu.cisq1.lingo.words.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import nl.hu.cisq1.lingo.words.domain.exception.InvalidFeedbackException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -21,12 +21,13 @@ public class Feedback {
 	public Feedback(String attempt,List<Mark> marks) {
 		this.attempt=attempt;
 		this.marks=marks;
-		if(this.attempt.length()!=this.marks.size()) throw new InvalidFeedbackException(this.marks.size(),this.attempt.length());
+		//Disabled because invalid feedback shouldn't prevent a feedback object from existing.
+		//if(this.attempt.length()!=this.marks.size()) throw new InvalidFeedbackException(this.marks.size(),this.attempt.length());
 	}
 	@SuppressWarnings("java:S5413") //wordListInvalid.remove gave a warning that is not applicable in this situation.
 	public static List<Mark> generateMarks(String guess, String word) {
 		List<Mark> marks=new ArrayList<>();
-		if(guess.length()!=word.length()) return List.of(Mark.INVALID);
+		if(guess.length()!=word.length()) return Collections.nCopies(word.length(), Mark.INVALID);
 		char[] wordArray=word.toCharArray();
 		char[] guessArray=guess.toCharArray();
 		List<Character> wordListInvalid=new ArrayList<>();
