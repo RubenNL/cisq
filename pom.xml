@@ -183,6 +183,28 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<version>1.6.2</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.pitest</groupId>
+						<artifactId>pitest-junit5-plugin</artifactId>
+						<version>0.12</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<timestampedReports>false</timestampedReports>
+					<threads>8</threads>
+					<outputFormats>html,xml</outputFormats>
+					<historyInputFile>${project.basedir}/target/pit.data</historyInputFile>
+					<historyOutputFile>${project.basedir}/target/pit.data</historyOutputFile>
+					<targetClasses>
+						<param>nl.hu.cisq1**</param>
+					</targetClasses>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>

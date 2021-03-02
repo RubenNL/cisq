@@ -131,4 +131,25 @@ class RoundTest {
 		round.addFeedback("acbedf");
 		assertEquals(List.of("a",".",".",".",".","f"),round.giveHint());
 	}
+	@Test
+	@DisplayName("round get State Empty")
+	void getStateEmptyTest() {
+		assertEquals(State.ACTIVE,round.getState());
+	}
+	@Test
+	@DisplayName("round get State win")
+	void getStateWonTest() {
+		round.addFeedback("abcdef");
+		assertEquals(State.WON,round.getState());
+	}
+	@Test
+	@DisplayName("round get State lost")
+	void getStateLostTest() {
+		round.addFeedback("abcdea");
+		round.addFeedback("abcdeb");
+		round.addFeedback("abcdec");
+		round.addFeedback("abcded");
+		round.addFeedback("abcdee");
+		assertEquals(State.LOST,round.getState());
+	}
 }
