@@ -200,6 +200,9 @@
 					<outputFormats>html,xml</outputFormats>
 					<historyInputFile>${project.basedir}/target/pit.data</historyInputFile>
 					<historyOutputFile>${project.basedir}/target/pit.data</historyOutputFile>
+					<targetClasses>
+						<param>nl.hu.cisq1**</param>
+					</targetClasses>
 				</configuration>
 			</plugin>
 		</plugins>
