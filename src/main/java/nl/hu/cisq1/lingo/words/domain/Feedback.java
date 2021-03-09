@@ -28,18 +28,18 @@ public class Feedback {
 		if(guess.length()!=word.length()) return Collections.nCopies(word.length(), Mark.INVALID);
 		char[] wordArray=word.toCharArray();
 		char[] guessArray=guess.toCharArray();
-		List<Character> wordListInvalid=new ArrayList<>();
+		List<Character> wordListAbsent=new ArrayList<>();
 		for(int i=0;i<wordArray.length;i++) {
 			if(wordArray[i]==guessArray[i]) marks.add(Mark.CORRECT);
 			else {
 				marks.add(Mark.ABSENT);
-				wordListInvalid.add(wordArray[i]);
+				wordListAbsent.add(wordArray[i]);
 			}
 		}
 		for(int i=0;i<wordArray.length;i++) {
-			if(wordListInvalid.contains(guessArray[i]) && marks.get(i)==Mark.ABSENT) {
+			if(wordListAbsent.contains(guessArray[i]) && marks.get(i)==Mark.ABSENT) {
 				//noinspection RedundantCollectionOperation
-				wordListInvalid.remove(wordListInvalid.indexOf(guessArray[i]));
+				wordListAbsent.remove(wordListAbsent.indexOf(guessArray[i]));
 				marks.set(i,Mark.PRESENT);
 			}
 		}
