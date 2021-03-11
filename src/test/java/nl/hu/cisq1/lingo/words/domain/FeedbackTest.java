@@ -52,7 +52,8 @@ class FeedbackTest {
 		Feedback feedback=new Feedback("woord",marks);
 		List<String> oldHint=Arrays.asList(oldHintString.split("")); //Tests written with strings, to make it readable.
 		List<String> expected=Arrays.asList(expectedString.split(""));
-		assertEquals(expected,feedback.giveHint(oldHint,wordToGuess));
+		feedback.setHint(oldHint,wordToGuess);
+		assertEquals(expected,feedback.getHint());
 	}
 	private static Stream<Arguments> provideMarksTest() {
 		return Stream.of(

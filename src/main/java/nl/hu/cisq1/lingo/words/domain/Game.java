@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import nl.hu.cisq1.lingo.words.domain.exception.IllegalActionException;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 public class Game {
-	@Id private Integer id;
+	@Id @GeneratedValue Integer id;
 	@OneToMany(mappedBy="game") private List<Round> rounds=new ArrayList<>();
 	private boolean canStartNewRound() {
 		if(getLastRound()==null) return true;

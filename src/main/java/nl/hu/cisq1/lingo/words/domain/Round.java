@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Entity
@@ -24,6 +25,7 @@ public class Round {
 	public Feedback addFeedback(String attempt) {
 		if(getState()!=State.ACTIVE) throw new IllegalActionException("ronde is gewonnen/verloren!");
 		Feedback feedback=new Feedback(attempt,Feedback.generateMarks(attempt,word.getValue()));
+		feedback.setHint(this.giveHint(),this.word.getValue());
 		feedbackList.add(feedback);
 		return feedback;
 	}
@@ -40,12 +42,17 @@ public class Round {
 		if(feedbackList.size()==MAXROUNDS) return State.LOST;
 		return State.ACTIVE;
 	}
-	public List<String> giveHint() {//Rare structuur om de Feedback.giveHint op deze manier te laten werken...
+	public List<List<String>> allHints() {
+		//TODO refactor giveHint
+		List<List<String>> response=new ArrayList<>();
 		List<String> lastHint= new ArrayList<>(List.of(word.getValue().split("")[0]));
 		lastHint.addAll(Collections.nCopies(word.getLength()-1, "."));
-		for(Feedback feedback:feedbackList) {
-			lastHint=feedback.giveHint(lastHint,word.getValue());
-		}
-		return lastHint;
+		response.add(lastHint);
+		response.addAll(feedbackList.stream().map(Feedback::getHint).collect(Collectors.toList()));
+		return response;
+	}
+	public List<String> giveHint() {//Rare structuur om de Feedback.giveHint op deze manier te laten werken...
+		List<List<String>> allHints=this.allHints();
+		return allHints.get(allHints.size()-1);
 	}
 }

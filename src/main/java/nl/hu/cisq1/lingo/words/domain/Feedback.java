@@ -12,12 +12,14 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 public class Feedback {
-	@Id private Integer id;
+	@Id @GeneratedValue private Integer id;
 	@ManyToOne private Round round;
 	private String attempt;
 	@Enumerated
 	@ElementCollection(targetClass = Mark.class)
 	private List<Mark> marks;
+	@Lob//TODO Lob maakt het hier makkelijk, maar is mischien niet de beste oplossing.
+	private List<String> hint;
 	public Feedback(String attempt,List<Mark> marks) {
 		this.attempt=attempt;
 		this.marks=marks;
@@ -51,7 +53,7 @@ public class Feedback {
 	public boolean isWordValid() {
 		return marks.stream().noneMatch(mark->mark==Mark.INVALID);
 	}
-	public List<String> giveHint(List<String> lastHint,String wordToGuess) {
+	public void setHint(List<String> lastHint, String wordToGuess) {
 		String[] chars=wordToGuess.split("");
 		List<String> response=new ArrayList<>();
 		for(int i=0;i<chars.length;i++) {
@@ -59,6 +61,6 @@ public class Feedback {
 			else if(!lastHint.get(i).equals(".")) response.add(chars[i]);
 			else response.add(".");
 		}
-		return response;
+		this.hint=response;
 	}
 }
