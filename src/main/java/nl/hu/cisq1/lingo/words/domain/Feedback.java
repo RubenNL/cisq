@@ -27,26 +27,26 @@ public class Feedback {
 	}
 	@SuppressWarnings("java:S5413") //wordListInvalid.remove gave a warning that is not applicable in this situation.
 	public List<Mark> generateMarks(String word) {
-		List<Mark> marks=new ArrayList<>();
+		List<Mark> response=new ArrayList<>();
 		if(attempt.length()!=word.length()) return Collections.nCopies(word.length(), Mark.INVALID);
 		char[] wordArray=word.toCharArray();
 		char[] guessArray=attempt.toCharArray();
 		List<Character> wordListAbsent=new ArrayList<>();
 		for(int i=0;i<wordArray.length;i++) {
-			if(wordArray[i]==guessArray[i]) marks.add(Mark.CORRECT);
+			if(wordArray[i]==guessArray[i]) response.add(Mark.CORRECT);
 			else {
-				marks.add(Mark.ABSENT);
+				response.add(Mark.ABSENT);
 				wordListAbsent.add(wordArray[i]);
 			}
 		}
 		for(int i=0;i<wordArray.length;i++) {
-			if(wordListAbsent.contains(guessArray[i]) && marks.get(i)==Mark.ABSENT) {
+			if(wordListAbsent.contains(guessArray[i]) && response.get(i)==Mark.ABSENT) {
 				//noinspection RedundantCollectionOperation
 				wordListAbsent.remove(wordListAbsent.indexOf(guessArray[i]));
-				marks.set(i,Mark.PRESENT);
+				response.set(i,Mark.PRESENT);
 			}
 		}
-		return marks;
+		return response;
 	}
 	public boolean isWordGuessed() {
 		return this.marks.stream().allMatch(mark->mark==Mark.CORRECT);
