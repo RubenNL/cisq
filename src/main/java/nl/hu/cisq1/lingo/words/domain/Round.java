@@ -15,17 +15,16 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class Round {
 	public static final Integer MAXROUNDS=5;
-	@Id private Integer id;
-	@OneToOne private Word word;
+	@Id @GeneratedValue private Integer id;
+	@Lob private Word word;
 	@ManyToOne private Game game;
-	@OneToMany(mappedBy="round") private List<Feedback> feedbackList=new ArrayList<>();
+	@OneToMany(mappedBy="round",fetch=FetchType.EAGER,cascade=CascadeType.ALL) private List<Feedback> feedbackList=new ArrayList<>();
 	public Round(Word word) {
 		this.word=word;
 	}
 	public Feedback addFeedback(String attempt) {
 		if(getState()!=State.ACTIVE) throw new IllegalActionException("ronde is gewonnen/verloren!");
-		Feedback feedback=new Feedback(attempt,Feedback.generateMarks(attempt,word.getValue()));
-		feedback.setHint(this.giveHint(),this.word.getValue());
+		Feedback feedback=new Feedback(attempt,giveHint(),word.getValue());
 		feedbackList.add(feedback);
 		return feedback;
 	}
@@ -42,12 +41,14 @@ public class Round {
 		if(feedbackList.size()==MAXROUNDS) return State.LOST;
 		return State.ACTIVE;
 	}
+	public static List<String> firstHint(String word) {
+		List<String> hint= new ArrayList<>(List.of(word.split("")[0]));
+		hint.addAll(Collections.nCopies(word.length()-1, "."));
+		return hint;
+	}
 	public List<List<String>> allHints() {
-		//TODO refactor giveHint
 		List<List<String>> response=new ArrayList<>();
-		List<String> lastHint= new ArrayList<>(List.of(word.getValue().split("")[0]));
-		lastHint.addAll(Collections.nCopies(word.getLength()-1, "."));
-		response.add(lastHint);
+		response.add(Round.firstHint(word.getValue()));
 		response.addAll(feedbackList.stream().map(Feedback::getHint).collect(Collectors.toList()));
 		return response;
 	}

@@ -4,10 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import nl.hu.cisq1.lingo.words.domain.exception.IllegalActionException;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Game {
 	@Id @GeneratedValue Integer id;
-	@OneToMany(mappedBy="game") private List<Round> rounds=new ArrayList<>();
+	@OneToMany(mappedBy="game",fetch=FetchType.EAGER,cascade=CascadeType.ALL) private List<Round> rounds=new ArrayList<>();
 	private boolean canStartNewRound() {
 		if(getLastRound()==null) return true;
 		return getLastRound().wordGuessed();

@@ -22,23 +22,25 @@ class FeedbackTest {
 	@DisplayName("word is guessed multi-test")
 	@MethodSource("provideGuessedTests")
 	void giveHintTest(String attempt, List<Mark> marks,Boolean expected) {
-		Feedback feedback=new Feedback(attempt,marks);
+		Feedback feedback=new Feedback(attempt,Round.firstHint("woord"),"woord");
+		feedback.setMarks(marks);
 		assertEquals(expected,feedback.isWordGuessed());
 	}
 	private static Stream<Arguments> provideValidTests() {
 		return Stream.of(
 				Arguments.of("woord", List.of(Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT),true),
-				Arguments.of("woord", List.of(Mark.INVALID,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT),false)
+				Arguments.of(" oord", List.of(Mark.INVALID,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT),false)
 		);
 	}
 	@ParameterizedTest
 	@DisplayName("word is valid multi-test")
 	@MethodSource("provideValidTests")
 	void validTests(String attempt, List<Mark> marks,Boolean expected) {
-		Feedback feedback=new Feedback(attempt,marks);
+		Feedback feedback=new Feedback(attempt,List.of("w",".",".",".","."),"woord");
+		feedback.setMarks(marks);
 		assertEquals(expected,feedback.isWordValid());
 	}
-	private static Stream<Arguments> provideHintTests() {
+	/*private static Stream<Arguments> provideHintTests() {
 		return Stream.of(
 				Arguments.of("woord", List.of(Mark.CORRECT,Mark.ABSENT,Mark.CORRECT,Mark.ABSENT,Mark.ABSENT), "w...d","w.o.d"),
 				Arguments.of("woord", List.of(Mark.CORRECT,Mark.PRESENT,Mark.PRESENT,Mark.CORRECT,Mark.ABSENT), "w...d","w..rd"),
@@ -49,12 +51,12 @@ class FeedbackTest {
 	@DisplayName("hint multi-test")
 	@MethodSource("provideHintTests")
 	void hintTests(String wordToGuess, List<Mark> marks, String oldHintString,String expectedString) {
-		Feedback feedback=new Feedback("woord",marks);
 		List<String> oldHint=Arrays.asList(oldHintString.split("")); //Tests written with strings, to make it readable.
 		List<String> expected=Arrays.asList(expectedString.split(""));
-		feedback.setHint(oldHint,wordToGuess);
+		Feedback feedback=new Feedback("woord",oldHint,wordToGuess);
+		feedback.setMarks(marks);
 		assertEquals(expected,feedback.getHint());
-	}
+	}*/
 	private static Stream<Arguments> provideMarksTest() {
 		return Stream.of(
 				Arguments.of("woord", "aaaaa",List.of(Mark.ABSENT,Mark.ABSENT,Mark.ABSENT,Mark.ABSENT,Mark.ABSENT),"Complete different word"),
@@ -71,6 +73,8 @@ class FeedbackTest {
 	@DisplayName("generate marks multi-test")
 	@MethodSource("provideMarksTest")
 	void marksTest(String word, String guess,List<Mark> expected,String message) {
-		assertEquals(expected,Feedback.generateMarks(guess,word),message);
+		//TODO gebruik van firsthint is hier mischien niet zo netjes
+		Feedback feedback=new Feedback(guess,Round.firstHint(word),word);
+		assertEquals(expected,feedback.getMarks(),message);
 	}
 }
