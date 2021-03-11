@@ -18,42 +18,43 @@ public class Feedback {
 	@Enumerated
 	@ElementCollection(targetClass = Mark.class)
 	private List<Mark> marks;
-	@Lob//TODO Lob maakt het hier makkelijk, maar is mischien niet de beste oplossing.
+	@ElementCollection
 	private List<String> hint;
-	public Feedback(String attempt,List<Mark> marks) {
+	public Feedback(String attempt, List<String> lastHint,String wordToGuess) {
 		this.attempt=attempt;
-		this.marks=marks;
+		this.marks=generateMarks(wordToGuess);
+		this.hint=this.generateHint(lastHint,wordToGuess);
 	}
 	@SuppressWarnings("java:S5413") //wordListInvalid.remove gave a warning that is not applicable in this situation.
-	public static List<Mark> generateMarks(String guess, String word) {
-		List<Mark> marks=new ArrayList<>();
-		if(guess.length()!=word.length()) return Collections.nCopies(word.length(), Mark.INVALID);
+	public List<Mark> generateMarks(String word) {
+		List<Mark> response=new ArrayList<>();
+		if(attempt.length()!=word.length()) return Collections.nCopies(word.length(), Mark.INVALID);
 		char[] wordArray=word.toCharArray();
-		char[] guessArray=guess.toCharArray();
+		char[] guessArray=attempt.toCharArray();
 		List<Character> wordListAbsent=new ArrayList<>();
 		for(int i=0;i<wordArray.length;i++) {
-			if(wordArray[i]==guessArray[i]) marks.add(Mark.CORRECT);
+			if(wordArray[i]==guessArray[i]) response.add(Mark.CORRECT);
 			else {
-				marks.add(Mark.ABSENT);
+				response.add(Mark.ABSENT);
 				wordListAbsent.add(wordArray[i]);
 			}
 		}
 		for(int i=0;i<wordArray.length;i++) {
-			if(wordListAbsent.contains(guessArray[i]) && marks.get(i)==Mark.ABSENT) {
+			if(wordListAbsent.contains(guessArray[i]) && response.get(i)==Mark.ABSENT) {
 				//noinspection RedundantCollectionOperation
 				wordListAbsent.remove(wordListAbsent.indexOf(guessArray[i]));
-				marks.set(i,Mark.PRESENT);
+				response.set(i,Mark.PRESENT);
 			}
 		}
-		return marks;
+		return response;
 	}
 	public boolean isWordGuessed() {
-		return marks.stream().allMatch(mark->mark==Mark.CORRECT);
+		return this.marks.stream().allMatch(mark->mark==Mark.CORRECT);
 	}
 	public boolean isWordValid() {
 		return marks.stream().noneMatch(mark->mark==Mark.INVALID);
 	}
-	public void setHint(List<String> lastHint, String wordToGuess) {
+	private List<String> generateHint(List<String> lastHint, String wordToGuess) {
 		String[] chars=wordToGuess.split("");
 		List<String> response=new ArrayList<>();
 		for(int i=0;i<chars.length;i++) {
@@ -61,6 +62,6 @@ public class Feedback {
 			else if(!lastHint.get(i).equals(".")) response.add(chars[i]);
 			else response.add(".");
 		}
-		this.hint=response;
+		return response;
 	}
 }

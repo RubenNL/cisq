@@ -3,13 +3,13 @@ package nl.hu.cisq1.lingo.words.domain;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 
-@Entity
 @Data
 @NoArgsConstructor
-public class Word {
+//TODO fix words
+public class Word implements Serializable {
     @Id private String value;
     private Integer length;
 

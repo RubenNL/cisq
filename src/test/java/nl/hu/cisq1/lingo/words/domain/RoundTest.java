@@ -20,8 +20,7 @@ class RoundTest {
 	@DisplayName("addFeedback simple test")
 	void addFeedback() {
 		Feedback feedback=round.addFeedback("testab");
-		Feedback expected=new Feedback("testab",Feedback.generateMarks("testab","abcdef"));
-		expected.setHint(List.of("a",".",".",".",".","."),"abcdef");
+		Feedback expected=new Feedback("testab",List.of("a",".",".",".",".","."),"abcdef");
 		assertEquals(expected,feedback,"Feedback is correct gereturned");
 		assertEquals(List.of(expected),round.getFeedbackList(),"List is ingevuld");
 	}
