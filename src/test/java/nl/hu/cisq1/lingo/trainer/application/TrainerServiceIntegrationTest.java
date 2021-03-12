@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Transactional
-public class TrainerServiceIntegrationTest {
+class TrainerServiceIntegrationTest {
 	@Autowired
 	TrainerService service;
 	@Autowired
