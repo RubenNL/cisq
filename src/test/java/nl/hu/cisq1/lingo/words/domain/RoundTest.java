@@ -13,7 +13,7 @@ class RoundTest {
 	Round round;
 	@BeforeEach
 	void beforeEach() {
-		round=new Round(new Word("abcdef"));
+		round=new Round("abcdef");
 	}
 	//Veel van deze tests zouden beter met ParameterizedTest gedaan kunnen worden, maar ik kreeg dat niet netjes.
 	@Test

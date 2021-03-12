@@ -13,18 +13,19 @@ import java.util.stream.Collectors;
 @Data
 @Entity
 @NoArgsConstructor
+//@Table(name="roundround")
 public class Round {
 	public static final Integer MAXROUNDS=5;
 	@Id @GeneratedValue private Integer id;
-	@Lob private Word word;
+	private String word;
 	@ManyToOne private Game game;
 	@OneToMany(mappedBy="round",fetch=FetchType.EAGER,cascade=CascadeType.ALL) private List<Feedback> feedbackList=new ArrayList<>();
-	public Round(Word word) {
+	public Round(String word) {
 		this.word=word;
 	}
 	public Feedback addFeedback(String attempt) {
 		if(getState()!=State.ACTIVE) throw new IllegalActionException("ronde is gewonnen/verloren!");
-		Feedback feedback=new Feedback(attempt,giveHint(),word.getValue());
+		Feedback feedback=new Feedback(attempt,giveHint(),word);
 		feedbackList.add(feedback);
 		return feedback;
 	}
@@ -48,7 +49,7 @@ public class Round {
 	}
 	public List<List<String>> allHints() {
 		List<List<String>> response=new ArrayList<>();
-		response.add(Round.firstHint(word.getValue()));
+		response.add(Round.firstHint(word));
 		response.addAll(feedbackList.stream().map(Feedback::getHint).collect(Collectors.toList()));
 		return response;
 	}
