@@ -20,7 +20,7 @@ public class Game {
 	}
 	public void startNewRound(Word word) {
 		if(!canStartNewRound()) throw new IllegalActionException("Kan geen nieuwe ronde starten!");
-		this.rounds.add(new Round(word));
+		this.rounds.add(new Round(word.getValue()));
 	}
 	public Integer getScore() {
 		return rounds.stream().mapToInt(Round::getScore).sum();

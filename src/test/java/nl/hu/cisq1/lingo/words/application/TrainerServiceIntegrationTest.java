@@ -30,6 +30,11 @@ public class TrainerServiceIntegrationTest {
 		assertEquals(1,game.getRounds().size());
 	}
 	@Test
+	@DisplayName("game not found")
+	void gameNotFound() {
+		assertThrows(GameNotFoundException.class,()->service.getGame(0));
+	}
+	@Test
 	@DisplayName("guessTest correct")
 	void guessTest() {
 		WordService wordService= Mockito.mock(WordService.class);
@@ -37,7 +42,6 @@ public class TrainerServiceIntegrationTest {
 		service=new TrainerService(repository,wordService);
 		int gameId=service.newGame().getId();
 		service.newRound(gameId);
-		Game game=service.getGame(gameId);
 		service.guess(gameId,"testab");
 		assertEquals(State.WON,service.getGame(gameId).getLastRound().getState());
 	}

@@ -4,12 +4,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Id;
-import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
-//TODO fix words
-public class Word implements Serializable {
+//TODO remove this class maybe?
+public class Word {
     @Id private String value;
     private Integer length;
 
