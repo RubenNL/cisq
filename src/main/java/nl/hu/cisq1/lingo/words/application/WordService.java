@@ -14,13 +14,20 @@ import java.util.List;
 @Service
 @Transactional
 public class WordService {
-    public String provideRandomWord(Integer length) {
+    public List<String> getWordsOfLength(Integer length) {
         List<String> items;
         try {
             items=Files.readAllLines(Paths.get(getClass().getClassLoader().getResource(length + ".txt").toURI()));
         } catch(IOException | URISyntaxException | NullPointerException e) {
             throw new WordLengthNotSupportedException(length);
         }
+        return items;
+    }
+    public String provideRandomWord(Integer length) {
+        List<String> items=getWordsOfLength(length);
         return items.get(new SecureRandom().nextInt(items.size()));
+    }
+    public boolean doesWordExist(String word) {
+        return getWordsOfLength(word.length()).contains(word);
     }
 }

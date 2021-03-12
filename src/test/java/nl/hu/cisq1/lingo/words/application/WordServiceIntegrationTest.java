@@ -1,9 +1,16 @@
 package nl.hu.cisq1.lingo.words.application;
 
+import nl.hu.cisq1.lingo.trainer.domain.Mark;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -36,5 +43,17 @@ class WordServiceIntegrationTest {
             // (done here for verification of student configuration)
             System.out.println("Random word: " + randomWord);
         }
+    }
+    private static Stream<Arguments> provideWordExistsTests() {
+        return Stream.of(
+                Arguments.of("abcdef", false),
+                Arguments.of("woord", true)
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("provideWordExistsTests")
+    @DisplayName("wordExiststest")
+    void wordExistsTest(String word, boolean expected) {
+        assertEquals(expected,service.doesWordExist(word),word+" exists test");
     }
 }
