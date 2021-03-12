@@ -1,8 +1,8 @@
-package nl.hu.cisq1.lingo.words.domain;
+package nl.hu.cisq1.lingo.trainer.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import nl.hu.cisq1.lingo.words.domain.exception.IllegalActionException;
+import nl.hu.cisq1.lingo.trainer.domain.exceptions.IllegalActionException;
 
 import javax.persistence.*;
 import java.util.ArrayList;

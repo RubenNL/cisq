@@ -1,4 +1,4 @@
-package nl.hu.cisq1.lingo.words.domain;
+package nl.hu.cisq1.lingo.trainer.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,7 +21,7 @@ class FeedbackTest {
 	@DisplayName("word is guessed multi-test")
 	@MethodSource("provideGuessedTests")
 	void giveHintTest(String attempt, List<Mark> marks,Boolean expected) {
-		Feedback feedback=new Feedback(attempt,Round.firstHint("woord"),"woord");
+		Feedback feedback=new Feedback(attempt, Round.firstHint("woord"),"woord");
 		feedback.setMarks(marks);
 		assertEquals(expected,feedback.isWordGuessed());
 	}

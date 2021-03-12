@@ -1,6 +1,6 @@
-package nl.hu.cisq1.lingo.words.domain;
+package nl.hu.cisq1.lingo.trainer.domain;
 
-import nl.hu.cisq1.lingo.words.domain.exception.IllegalActionException;
+import nl.hu.cisq1.lingo.trainer.domain.exceptions.IllegalActionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
