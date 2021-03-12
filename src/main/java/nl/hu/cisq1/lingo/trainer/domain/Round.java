@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 @Data
 @Entity
 @NoArgsConstructor
-//@Table(name="roundround")
 public class Round {
 	public static final Integer MAXROUNDS=5;
 	@Id @GeneratedValue private Integer id;
