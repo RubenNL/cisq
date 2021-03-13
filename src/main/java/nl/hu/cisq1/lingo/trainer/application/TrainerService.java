@@ -24,6 +24,7 @@ public class TrainerService {
 		return repository.save(new Game());
 	}
 	public void guess(int gameId, String guess) {
+		if(!wordService.doesWordExist(guess)) throw new WordNotExistException(guess);
 		Game game=getGame(gameId);
 		game.getLastRound().addFeedback(guess);
 		repository.save(game);
