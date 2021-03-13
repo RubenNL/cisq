@@ -6,14 +6,16 @@ import nl.hu.cisq1.lingo.trainer.domain.Game;
 import nl.hu.cisq1.lingo.trainer.domain.State;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.provider.Arguments;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -40,10 +42,41 @@ class TrainerServiceIntegrationTest {
 	void guessTest() {
 		WordService wordService= Mockito.mock(WordService.class);
 		Mockito.when(wordService.provideRandomWord(Mockito.anyInt())).thenReturn("testab");
+		Mockito.when(wordService.doesWordExist(Mockito.anyString())).thenReturn(true);
 		service=new TrainerService(repository,wordService);
 		int gameId=service.newGame().getId();
 		service.newRound(gameId);
 		service.guess(gameId,"testab");
 		assertEquals(State.WON,service.getGame(gameId).getLastRound().getState());
+	}
+	private static Stream<Arguments> provideWordExistsTests() {
+		return Stream.of(
+				Arguments.of("abcdef", false),
+				Arguments.of("woord", true)
+		);
+	}
+	@Test
+	@DisplayName("Word not exist error test")
+	void wordNotExistsTest() {
+		WordService wordService= Mockito.mock(WordService.class);
+		Mockito.when(wordService.doesWordExist(Mockito.anyString())).thenReturn(false);
+		Mockito.when(wordService.provideRandomWord(Mockito.anyInt())).thenReturn("testab");
+		service=new TrainerService(repository,wordService);
+		int gameId=service.newGame().getId();
+		service.newRound(gameId);
+		assertThrows(WordNotExistException.class,()->service.guess(gameId,"testab"));
+		assertTrue(service.getGame(gameId).getLastRound().getFeedbackList().isEmpty());
+	}
+	@Test
+	@DisplayName("word does exist no error test")
+	void wordExistsTest() {
+		WordService wordService= Mockito.mock(WordService.class);
+		Mockito.when(wordService.doesWordExist(Mockito.anyString())).thenReturn(true);
+		Mockito.when(wordService.provideRandomWord(Mockito.anyInt())).thenReturn("testab");
+		service=new TrainerService(repository,wordService);
+		int gameId=service.newGame().getId();
+		service.newRound(gameId);
+		assertDoesNotThrow(()->service.guess(gameId,"testab"));
+		assertFalse(service.getGame(gameId).getLastRound().getFeedbackList().isEmpty());
 	}
 }
