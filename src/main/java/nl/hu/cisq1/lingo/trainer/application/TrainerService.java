@@ -1,6 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.application;
 
-import nl.hu.cisq1.lingo.trainer.application.DTO.GameDTO;
+import nl.hu.cisq1.lingo.trainer.application.dto.GameDTO;
 import nl.hu.cisq1.lingo.words.application.WordService;
 import nl.hu.cisq1.lingo.trainer.data.SpringGameRepository;
 import nl.hu.cisq1.lingo.trainer.domain.Game;
