@@ -6,14 +6,13 @@ import nl.hu.cisq1.lingo.trainer.domain.Game;
 import nl.hu.cisq1.lingo.trainer.domain.State;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.provider.Arguments;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 
-import java.util.stream.Stream;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -49,12 +48,6 @@ class TrainerServiceIntegrationTest {
 		service.guess(gameId,"testab");
 		assertEquals(State.WON,service.getGame(gameId).getLastRound().getState());
 	}
-	private static Stream<Arguments> provideWordExistsTests() {
-		return Stream.of(
-				Arguments.of("abcdef", false),
-				Arguments.of("woord", true)
-		);
-	}
 	@Test
 	@DisplayName("Word not exist error test")
 	void wordNotExistsTest() {
@@ -78,5 +71,22 @@ class TrainerServiceIntegrationTest {
 		service.newRound(gameId);
 		assertDoesNotThrow(()->service.guess(gameId,"testab"));
 		assertFalse(service.getGame(gameId).getLastRound().getFeedbackList().isEmpty());
+	}
+	@Test
+	@DisplayName("getProgressTest")
+	//overgenomen van guessTest
+	void getProgressTest() {
+		WordService wordService= Mockito.mock(WordService.class);
+		Mockito.when(wordService.provideRandomWord(Mockito.anyInt())).thenReturn("testab");
+		Mockito.when(wordService.doesWordExist(Mockito.anyString())).thenReturn(true);
+		service=new TrainerService(repository,wordService);
+		int gameId=service.newGame().getId();
+		service.newRound(gameId);
+		service.guess(gameId,"testab");
+		Game game=service.getGame(gameId);
+		repository= Mockito.mock(SpringGameRepository.class);
+		Mockito.when(repository.findById(Mockito.anyInt())).thenReturn(Optional.of(game));
+		//FIXME dit is natuurlijk niet netjes. moet mischien herschreven gaan worden.
+		assertEquals("GameDTO(gameId="+gameId+", score=25, rounds=[RoundDTO(feedbackList=[FeedbackDTO(marks=[CORRECT, CORRECT, CORRECT, CORRECT, CORRECT, CORRECT], hint=[t, e, s, t, a, b])])])",service.getProgress(gameId).toString());
 	}
 }
