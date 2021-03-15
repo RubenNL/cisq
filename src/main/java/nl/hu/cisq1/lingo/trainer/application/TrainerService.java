@@ -1,5 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.application;
 
+import nl.hu.cisq1.lingo.trainer.application.dto.GameDTO;
 import nl.hu.cisq1.lingo.words.application.WordService;
 import nl.hu.cisq1.lingo.trainer.data.SpringGameRepository;
 import nl.hu.cisq1.lingo.trainer.domain.Game;
@@ -17,8 +18,11 @@ public class TrainerService {
 		this.repository = repository;
 		this.wordService = wordService;
 	}
-	public Game getGame(int gameId) {
+	Game getGame(int gameId) {
 		return repository.findById(gameId).orElseThrow(GameNotFoundException::new);
+	}
+	public GameDTO getProgress(int gameId) {
+		return new GameDTO(getGame(gameId));
 	}
 	public Game newGame() {
 		return repository.save(new Game());
