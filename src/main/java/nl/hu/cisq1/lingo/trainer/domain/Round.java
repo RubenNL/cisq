@@ -25,6 +25,7 @@ public class Round {
 	public Feedback addFeedback(String attempt) {
 		if(getState()!=State.ACTIVE) throw new IllegalActionException("ronde is gewonnen/verloren!");
 		Feedback feedback=new Feedback(attempt,giveHint(),word);
+		feedback.setRound(this);
 		feedbackList.add(feedback);
 		return feedback;
 	}
