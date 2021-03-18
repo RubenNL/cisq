@@ -17,11 +17,13 @@ public class Game {
 	@OneToMany(mappedBy="game",fetch=FetchType.EAGER,cascade=CascadeType.ALL) private List<Round> rounds=new ArrayList<>();
 	private boolean canStartNewRound() {
 		if(getLastRound()==null) return true;
-		return getLastRound().wordGuessed();
+		return getLastRound().getState()!=State.ACTIVE;
 	}
 	public void startNewRound(Word word) {
 		if(!canStartNewRound()) throw new IllegalActionException("Kan geen nieuwe ronde starten!");
-		this.rounds.add(new Round(word.getValue()));
+		Round round=new Round(word.getValue());
+		round.setGame(this);
+		this.rounds.add(round);
 	}
 	public Integer getScore() {
 		return rounds.stream().mapToInt(Round::getScore).sum();

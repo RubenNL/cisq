@@ -45,7 +45,7 @@ class GameTest {
 		round.addFeedback("abcd");
 		round.addFeedback("abcd");
 		Word word=new Word("test");
-		assertThrows(IllegalActionException.class, () -> game.startNewRound(word));
+		assertDoesNotThrow(() -> game.startNewRound(word));
 	}
 	@Test
 	@DisplayName("emptyScore test")

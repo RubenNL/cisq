@@ -2,6 +2,7 @@ package nl.hu.cisq1.lingo.trainer.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Feedback {
 	@Id @GeneratedValue private Integer id;
-	@ManyToOne private Round round;
+	@ToString.Exclude @ManyToOne private Round round;
 	private String attempt;
 	@Enumerated
 	@ElementCollection(targetClass = Mark.class)

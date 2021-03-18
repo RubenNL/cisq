@@ -87,6 +87,6 @@ class TrainerServiceIntegrationTest {
 		repository= Mockito.mock(SpringGameRepository.class);
 		Mockito.when(repository.findById(Mockito.anyInt())).thenReturn(Optional.of(game));
 		//FIXME dit is natuurlijk niet netjes. moet mischien herschreven gaan worden.
-		assertEquals("GameDTO(gameId="+gameId+", score=25, rounds=[RoundDTO(feedbackList=[FeedbackDTO(marks=[CORRECT, CORRECT, CORRECT, CORRECT, CORRECT, CORRECT], hint=[t, e, s, t, a, b])])])",service.getProgress(gameId).toString());
+		assertEquals("GameDTO(gameId="+gameId+", score=25, rounds=[RoundDTO(feedbackList=[FeedbackDTO(marks=[CORRECT, CORRECT, CORRECT, CORRECT, CORRECT, CORRECT], hint=[t, e, s, t, a, b], attempt=testab)], currentHint=[t, e, s, t, a, b])])",service.getProgress(gameId).toString());
 	}
 }
