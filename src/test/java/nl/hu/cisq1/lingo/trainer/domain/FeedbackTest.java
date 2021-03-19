@@ -5,6 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -39,7 +40,7 @@ class FeedbackTest {
 		feedback.setMarks(marks);
 		assertEquals(expected,feedback.isWordValid());
 	}
-	/*private static Stream<Arguments> provideHintTests() {
+	private static Stream<Arguments> provideHintTests() {
 		return Stream.of(
 				Arguments.of("woord", List.of(Mark.CORRECT,Mark.ABSENT,Mark.CORRECT,Mark.ABSENT,Mark.ABSENT), "w...d","w.o.d"),
 				Arguments.of("woord", List.of(Mark.CORRECT,Mark.PRESENT,Mark.PRESENT,Mark.CORRECT,Mark.ABSENT), "w...d","w..rd"),
@@ -50,12 +51,10 @@ class FeedbackTest {
 	@DisplayName("hint multi-test")
 	@MethodSource("provideHintTests")
 	void hintTests(String wordToGuess, List<Mark> marks, String oldHintString,String expectedString) {
-		List<String> oldHint=Arrays.asList(oldHintString.split("")); //Tests written with strings, to make it readable.
+		List<String> oldHint= Arrays.asList(oldHintString.split("")); //Tests written with strings, to make it readable.
 		List<String> expected=Arrays.asList(expectedString.split(""));
-		Feedback feedback=new Feedback("woord",oldHint,wordToGuess);
-		feedback.setMarks(marks);
-		assertEquals(expected,feedback.getHint());
-	}*/
+		assertEquals(expected,Feedback.generateHint(oldHint,wordToGuess,marks));
+	}
 	private static Stream<Arguments> provideMarksTest() {
 		return Stream.of(
 				Arguments.of("woord", "aaaaa",List.of(Mark.ABSENT,Mark.ABSENT,Mark.ABSENT,Mark.ABSENT,Mark.ABSENT),"Complete different word"),
@@ -72,8 +71,6 @@ class FeedbackTest {
 	@DisplayName("generate marks multi-test")
 	@MethodSource("provideMarksTest")
 	void marksTest(String word, String guess,List<Mark> expected,String message) {
-		//TODO gebruik van firsthint is hier mischien niet zo netjes
-		Feedback feedback=new Feedback(guess,Round.firstHint(word),word);
-		assertEquals(expected,feedback.getMarks(),message);
+		assertEquals(expected,Feedback.generateMarks(word,guess),message);
 	}
 }
