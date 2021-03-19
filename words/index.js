@@ -12,5 +12,5 @@ readFileSync(`${__dirname}/woorden-opentaal.txt`, "utf-8")
 		wordsGrouped[word.length].push(word)
 	})
 Object.keys(wordsGrouped).forEach(length=>{
-	writeFileSync(`${__dirname}/../src/main/resources/${length}.txt`, wordsGrouped[length].join('\n'));
+	writeFileSync(`${__dirname}/../src/main/resources/words/${length}.txt`, wordsGrouped[length].join('\n'));
 })

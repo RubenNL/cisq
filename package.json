@@ -1,0 +1,18 @@
+{
+  "name": "cisq",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "node words/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RubenNL/cisq.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RubenNL/cisq/issues"
+  },
+  "homepage": "https://github.com/RubenNL/cisq#readme"
+}
