@@ -26,8 +26,11 @@ public class Feedback {
 		this.marks=generateMarks(wordToGuess);
 		this.hint=this.generateHint(lastHint,wordToGuess);
 	}
-	@SuppressWarnings("java:S5413") //wordListInvalid.remove gave a warning that is not applicable in this situation.
 	public List<Mark> generateMarks(String word) {
+		return generateMarks(word,attempt);
+	}
+	@SuppressWarnings("java:S5413") //wordListInvalid.remove gave a warning that is not applicable in this situation.
+	static List<Mark> generateMarks(String word, String attempt) {
 		List<Mark> response=new ArrayList<>();
 		if(attempt.length()!=word.length()) return Collections.nCopies(word.length(), Mark.INVALID);
 		char[] wordArray=word.toCharArray();
@@ -55,14 +58,17 @@ public class Feedback {
 	public boolean isWordValid() {
 		return marks.stream().noneMatch(mark->mark==Mark.INVALID);
 	}
-	private List<String> generateHint(List<String> lastHint, String wordToGuess) {
+	static List<String> generateHint(List<String> lastHint, String wordToGuess, List<Mark> marks) {
 		String[] chars=wordToGuess.split("");
 		List<String> response=new ArrayList<>();
 		for(int i=0;i<chars.length;i++) {
-			if(this.marks.get(i)==Mark.CORRECT) response.add(chars[i]);
+			if(marks.get(i)==Mark.CORRECT) response.add(chars[i]);
 			else if(!lastHint.get(i).equals(".")) response.add(chars[i]);
 			else response.add(".");
 		}
 		return response;
+	}
+	private List<String> generateHint(List<String> lastHint, String wordToGuess) {
+		return generateHint(lastHint,wordToGuess,this.marks);
 	}
 }
