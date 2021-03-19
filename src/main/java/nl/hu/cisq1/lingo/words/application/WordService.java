@@ -17,7 +17,7 @@ public class WordService {
     public List<String> getWordsOfLength(Integer length) {
         List<String> items;
         try {
-            items=Files.readAllLines(Paths.get(getClass().getClassLoader().getResource(length + ".txt").toURI()));
+            items=Files.readAllLines(Paths.get(getClass().getClassLoader().getResource("words/"+length + ".txt").toURI()));
         } catch(IOException | URISyntaxException | NullPointerException e) {
             throw new WordLengthNotSupportedException(length);
         }
