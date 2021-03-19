@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Entity
 @NoArgsConstructor
 public class Round {
-	public static final Integer MAXROUNDS=5;
+	public static final Integer MAXTRIES =5;
 	@Id @GeneratedValue private Integer id;
 	private String word;
 	@ManyToOne private Game game;
@@ -35,11 +35,11 @@ public class Round {
 	}
 	public int getScore() {
 		if(!wordGuessed()) return 0;
-		return (MAXROUNDS*(MAXROUNDS-feedbackList.size())+MAXROUNDS);
+		return (MAXTRIES *(MAXTRIES -feedbackList.size())+ MAXTRIES);
 	}
 	public State getState() {
 		if(wordGuessed()) return State.WON;
-		if(feedbackList.size()==MAXROUNDS) return State.LOST;
+		if(feedbackList.size()== MAXTRIES) return State.LOST;
 		return State.ACTIVE;
 	}
 	public static List<String> firstHint(String word) {

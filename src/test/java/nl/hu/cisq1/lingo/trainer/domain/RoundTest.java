@@ -28,7 +28,7 @@ class RoundTest {
 	@Test
 	@DisplayName("addFeedback max test")
 	void addFeedbackMaxTest() {
-		for(int i=0;i<Round.MAXROUNDS;i++) {
+		for(int i = 0; i<Round.MAXTRIES; i++) {
 			assertDoesNotThrow(() -> round.addFeedback("testab"), "first to max does not throw");
 		}
 		assertThrows(IllegalActionException.class,()->round.addFeedback("testag"),"sixth does throw");
