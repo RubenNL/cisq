@@ -35,7 +35,7 @@ public class TrainerService {
 	}
 	public void newRound(int gameId) {
 		Game game=getGame(gameId);
-		String wordString=wordService.provideRandomWord(6);
+		String wordString=wordService.provideRandomWord(game.getNextSize());
 		Word word=new Word(wordString);
 		game.startNewRound(word);
 		repository.save(game);
