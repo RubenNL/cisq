@@ -32,4 +32,7 @@ public class Game {
 		if(this.rounds.isEmpty()) return null;
 		return this.rounds.get(this.rounds.size() - 1);
 	}
+	public Integer getNextSize() {
+		return rounds.size()%3+5;
+	}
 }

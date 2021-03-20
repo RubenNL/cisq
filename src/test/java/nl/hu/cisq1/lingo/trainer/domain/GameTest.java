@@ -5,6 +5,12 @@ import nl.hu.cisq1.lingo.words.domain.Word;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mockito;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -77,5 +83,25 @@ class GameTest {
 		round.addFeedback("adcb");
 		round.addFeedback("abcd");
 		assertEquals(45, game.getScore());
+	}
+	private static Stream<Arguments> provideNextSizeTests() {
+		return Stream.of(
+				Arguments.of(0,5),
+				Arguments.of(1,6),
+				Arguments.of(2,7),
+				Arguments.of(3,5),
+				Arguments.of(4,6),
+				Arguments.of(5,7),
+				Arguments.of(6,5)
+		);
+	}
+	@ParameterizedTest
+	@DisplayName("NextSize test")
+	@MethodSource("provideNextSizeTests")
+	void nextSizeTest(int roundAmounts,int expected) {
+		Round round= Mockito.spy(Round.class);
+		Mockito.when(round.getState()).thenReturn(State.WON);
+		for(int i=0;i<roundAmounts;i++) game.getRounds().add(round);
+		assertEquals(expected,game.getNextSize());
 	}
 }
