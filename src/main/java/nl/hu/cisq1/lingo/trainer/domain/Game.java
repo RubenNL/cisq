@@ -14,16 +14,14 @@ import java.util.List;
 @NoArgsConstructor
 public class Game {
 	@Id @GeneratedValue Integer id;
-	@OneToMany(mappedBy="game",fetch=FetchType.EAGER,cascade=CascadeType.ALL) private List<Round> rounds=new ArrayList<>();
+	@OneToMany(cascade=CascadeType.ALL) private List<Round> rounds=new ArrayList<>();
 	private boolean canStartNewRound() {
 		if(getLastRound()==null) return true;
 		return getLastRound().getState()!=State.ACTIVE;
 	}
 	public void startNewRound(Word word) {
 		if(!canStartNewRound()) throw new IllegalActionException("Kan geen nieuwe ronde starten!");
-		Round round=new Round(word.getValue());
-		round.setGame(this);
-		this.rounds.add(round);
+		this.rounds.add(new Round(word.getValue()));
 	}
 	public Integer getScore() {
 		return rounds.stream().mapToInt(Round::getScore).sum();
