@@ -14,7 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 public class Feedback {
 	@Id @GeneratedValue private Integer id;
-	@ToString.Exclude @ManyToOne private Round round;
 	private String attempt;
 	@Enumerated
 	@ElementCollection(targetClass = Mark.class)

@@ -21,7 +21,6 @@ class RoundTest {
 	void addFeedback() {
 		Feedback feedback=round.addFeedback("testab");
 		Feedback expected=new Feedback("testab",List.of("a",".",".",".",".","."),"abcdef");
-		expected.setRound(round);
 		assertEquals(expected,feedback,"Feedback is correct gereturned");
 		assertEquals(List.of(expected),round.getFeedbackList(),"List is ingevuld");
 	}

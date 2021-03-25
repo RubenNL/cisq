@@ -17,15 +17,13 @@ public class Round {
 	public static final Integer MAXTRIES =5;
 	@Id @GeneratedValue private Integer id;
 	private String word;
-	@ManyToOne private Game game;
-	@OneToMany(mappedBy="round",fetch=FetchType.EAGER,cascade=CascadeType.ALL) private List<Feedback> feedbackList=new ArrayList<>();
+	@OneToMany(cascade=CascadeType.ALL) private List<Feedback> feedbackList=new ArrayList<>();
 	public Round(String word) {
 		this.word=word;
 	}
 	public Feedback addFeedback(String attempt) {
 		if(getState()!=State.ACTIVE) throw new IllegalActionException("ronde is gewonnen/verloren!");
 		Feedback feedback=new Feedback(attempt,giveHint(),word);
-		feedback.setRound(this);
 		feedbackList.add(feedback);
 		return feedback;
 	}
