@@ -7,7 +7,6 @@ import javax.persistence.Id;
 
 @Data
 @NoArgsConstructor
-//TODO remove this class maybe?
 public class Word {
     @Id private String value;
     private Integer length;

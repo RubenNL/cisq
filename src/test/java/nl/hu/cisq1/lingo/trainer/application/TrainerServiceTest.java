@@ -12,7 +12,6 @@ import org.mockito.stubbing.Answer;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import javax.annotation.processing.Generated;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
